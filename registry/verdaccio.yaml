@@ -1,0 +1,18 @@
+# Local development and CI registry for @enterprise packages.
+storage: ../tmp/registry/storage
+auth:
+  htpasswd:
+    file: ../tmp/registry/htpasswd
+    max_users: 10
+uplinks: {}
+packages:
+  "@enterprise/*":
+    access: $all
+    publish: $authenticated
+    unpublish: $authenticated
+  "**":
+    access: $all
+log:
+  type: stdout
+  format: pretty
+  level: warn

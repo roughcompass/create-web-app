@@ -1,0 +1,60 @@
+{
+  "name": "@enterprise/create-web-app",
+  "version": "0.1.0",
+  "description": "Generate the enterprise model React and Salt web application",
+  "license": "UNLICENSED",
+  "type": "module",
+  "bin": {
+    "create-web-app": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/",
+    "docs/",
+    "template/",
+    "provenance.json",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "packageManager": "npm@11.6.2",
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint --max-warnings=0 .",
+    "test": "vitest run --passWithNoTests",
+    "registry": "node scripts/registry.mjs",
+    "check": "npm run build && npm run typecheck && npm run lint && npm test",
+    "template:manifest": "npm run build --silent && node scripts/update-template-manifest.mjs",
+    "verify:package": "node scripts/verify-package.mjs",
+    "ci": "npm run check && npm run verify:package && npm audit --audit-level=moderate"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "@types/node": "24.19.0",
+    "@types/npm-package-arg": "6.1.4",
+    "eslint": "9.39.5",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.0",
+    "verdaccio": "6.10.4",
+    "vitest": "5.0.2"
+  },
+  "dependencies": {
+    "@clack/prompts": "1.8.1",
+    "npm-package-arg": "13.0.2",
+    "yaml": "2.9.1",
+    "zod": "4.6.5"
+  },
+  "overrides": {
+    "@verdaccio/config": {
+      "js-yaml": "5.4.2"
+    }
+  }
+}
